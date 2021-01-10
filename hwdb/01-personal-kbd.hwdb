@@ -1,0 +1,6 @@
+evdev:input:b0003v*
+  KEYBOARD_KEY_70039=esc
+
+evdev:atkbd:dmi:*
+  KEYBOARD_KEY_3a=esc
+  KEYBOARD_KEY_01=capslock
