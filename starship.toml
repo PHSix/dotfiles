@@ -1,0 +1,108 @@
+# Don't print a new line at the start of the prompt
+add_newline = false
+
+# Which is equivalent to
+# format = """
+# $username\
+# $hostname\
+# $shlvl\
+# $kubernetes\
+# $directory\
+# $git_branch\
+# $git_commit\
+# $git_state\
+# $git_status\
+# $hg_branch\
+# $docker_context\
+# $package\
+# $cmake\
+# $dart\
+# $dotnet\
+# $elixir\
+# $elm\
+# $erlang\
+# $golang\
+# $helm\
+# $java\
+# $julia\
+# $kotlin\
+# $nim\
+# $nodejs\
+# $ocaml\
+# $perl\
+# $php\
+# $purescript\
+# $python\
+# $ruby\
+# $rust\
+# $swift\
+# $terraform\
+# $vagrant\
+# $zig\
+# $nix_shell\
+# $conda\
+# $memory_usage\
+# $aws\
+# $gcloud\
+# $openstack\
+# $env_var\
+# $crystal\
+# $custom\
+# $cmd_duration\
+# $line_break\
+# $lua\
+# $jobs\
+# $battery\
+# $time\
+# $status\
+# $character"""
+
+# format = """
+# [┌───────────────────>](bold green)$directory$git_branch$battery
+# [└─>](bold green) """
+
+format = """
+[\\[](bold purple)$username$hostname[\\]](bold purple)[\\(](bold cyan)$directory$git_branch$git_status[\\)](bold cyan)$golang $character
+"""
+
+[[battery]]
+format = "[$symbol$percentage]($style) " 	
+full_symbol = "🔋"
+charging_symbol = "⚡️"
+discharging_symbol = "💀"
+disabled = false
+
+
+[character]
+success_symbol = "[➜](bold green)"
+error_symbol = "[➜](bold red)"
+vicmd_symbol = "[](bold green)"
+
+[directory]
+truncation_length = 2
+format = " [$path]($style)[$read_only]($read_only_style) "
+fish_style_pwd_dir_length = 1
+disabled = false
+
+[git_branch]
+format = "on [$symbol$branch]($style) "
+
+[username]
+style_root = "bold orange"
+style_user = "bold green"
+format = "[$user]($style) in "
+show_always = true
+
+
+[hostname]
+ssh_only = false
+format =  "[$hostname](bold blue) "
+trim_at = ".companyname.com"
+disabled = false
+
+[git_status]
+deleted = ""
+
+[golang]
+format = " Golang [$symbol($version)]($style)"
+symbol = " "

@@ -2,37 +2,41 @@ proxy(){
   export http_proxy=http://127.0.0.1:8889
   export https_proxy=http://127.0.0.1:8889
 }
+
+
+export RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static
+export RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup
+
 export EDITOR=nvim
 export PUB_HOSTED_URL=https://pub.flutter-io.cn
 export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
+export ANDROID_HOME=~/Android/Sdk
+export GLFW_IM_MODULE=ibus
+if [ $TERM = 'alacritty' ]
+then
+  export TERM=xterm-256color
+fi
 
-
+alias gl='git clone'
 alias cl=clear
 alias cn=touch
 alias mk=mkdir
 alias vi=nvim
-alias lg=lazygit
 alias n=neofetch
 alias lg=lazygit
 alias ra=ranger
 alias ranger='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
-
-
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
-
+alias battery="upower -i `upower -e | grep 'BAT'`"
+alias ls=exa
+alias l="exa -l"
+alias ll="exa -la"
 
 
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
   print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
   command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
-  command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" && \
+  command git clone https://hub.fastgit.org/zdharma/zinit "$HOME/.zinit/bin" && \
     print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
     print -P "%F{160}▓▒░ The clone has failed.%f%b"
 fi
@@ -47,33 +51,30 @@ zinit ice lucid wait='0' atinit='zpcompinit'
 zinit light zdharma/fast-syntax-highlighting
 
 zinit wait="1" lucid for \
-  OMZ::plugins/sudo/sudo.plugin.zsh \
   OMZ::plugins/autojump/autojump.plugin.zsh\
   OMZ::plugins/fzf/fzf.plugin.zsh\
   OMZ::lib/completion.zsh
 
+  # OMZ::plugins/sudo/sudo.plugin.zsh \
 
-zinit wait='0' lucid for \
-  OMZ::plugins/vi-mode/vi-mode.plugin.zsh\
-  OMZ::lib/history.zsh
+zinit snippet OMZ::lib/history.zsh
 
-VI_MODE_SET_CURSOR=true
+# zinit wait='0' lucid for \
+#   OMZ::plugins/vi-mode/vi-mode.plugin.zsh
+# OMZ::lib/history.zsh
+
+zinit ice depth=1
+zinit light jeffreytse/zsh-vi-mode
 
 zinit ice lucid wait='0' atload='_zsh_autosuggest_start'
 zinit light zsh-users/zsh-autosuggestions
 
 zinit ice lucid wait='0' atload='zpcompinit; zpcdreplay'
-zinit snippet OMZ::plugins/git/git.plugin.zsh
 
 zinit ice lucid wait='0'
 zinit light zsh-users/zsh-completions
 
 zinit ice lucid wait='1'
 zinit light Aloxaf/fzf-tab
+eval "$(starship init zsh)"
 
-zinit light romkatv/powerlevel10k
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
