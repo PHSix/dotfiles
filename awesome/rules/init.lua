@@ -23,7 +23,8 @@ awful.rules.rules = {
         "Arandr",
         -- "Gnome-boxes",
         "St",
-        "Alacritty"
+        "Alacritty",
+        "Wine"
       }
     },
     properties = {

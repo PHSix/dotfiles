@@ -32,7 +32,7 @@ local TopBar = function(s)
     clock,
     tray
   }
-  local top_panel = awful.wibar({position = "top", screen = s, opacity = 0.8, shape = gears.shape.rounded_rect, border_width = 4})
+  local top_panel = awful.wibar({position = "top", screen = s, opacity = 0.95, shape = gears.shape.rounded_rect, border_width = 4})
   top_panel:setup {
     {
       layout = wibox.layout.align.horizontal,

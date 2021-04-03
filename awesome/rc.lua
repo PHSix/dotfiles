@@ -49,23 +49,24 @@ _G.root.buttons(gears.table.join(awful.button({}, 4, awful.tag.viewnext), awful.
 
 local keys = require("configuration")
 local globalkeys = gears.table.join({}, keys.keys)
+local wibox = require("wibox")
 local dashboard = require("configuration.dashboard")
-globalkeys =
-  gears.table.join(
-  globalkeys,
-  awful.key(
-    {"Mod4"},
-    "s",
-    function()
-      if dashboard.visible == true then
-        dashboard.visible = false
-      else
-        dashboard.visible = true
-      end
-    end,
-    {description = "toggle tag #", group = "dashboard"}
-  )
-)
+-- globalkeys =
+--   gears.table.join(
+--   globalkeys,
+--   awful.key(
+--     {"Mod4"},
+--     "s",
+--     function()
+--       if dashboard.visible == true then
+--         dashboard.visible = false
+--       else
+--         dashboard.visible = true
+--       end
+--     end,
+--     {description = "toggle tag #", group = "dashboard"}
+--   )
+-- )
 _G.root.keys(globalkeys)
 
 _G.client.connect_signal(
@@ -77,7 +78,7 @@ _G.client.connect_signal(
   end
 )
 _G.client.connect_signal("manage", function (c)
-  if c.class == "Gnome-boxes" then
+  if c.class == "Gnome-boxes" or c.class == "Wine" or c.fullscreen then
     return
   end
   c.shape = function(cr,w,h)

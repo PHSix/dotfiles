@@ -25,6 +25,7 @@ local key_list = {
   map_key({mod}, "Return", func.terminal, {description = "Open a kitty termianal.", group = "launcher"}),
   map_key({mod, shift}, "Return", func.terminal_st, {description = "Open a kitty termianal.", group = "launcher"}),
   map_key({mod}, "d", func.launcher, {description = "Start rofi launcher.", group = "launcher"}),
+  map_key({mod, shift}, "d", func.app, {description = "Start rofi launcher.", group = "launcher"}),
   map_key({mod}, "n", func.layout_next, {description = "select next layout", group = "launcher"}),
   map_key({mod}, "p", func.layout_prev, {description = "select prev layout", group = "launcher"}),
   map_key({mod, shift}, "k", func.swap_with_next, {description = "Swap to child", group = "client"}),

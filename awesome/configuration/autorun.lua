@@ -9,8 +9,9 @@ do
     "clipit",
     "udiskie",
     "xfce4-power-manager",
-    "picom  --experimental-backends"
-    -- "picom  --experimental-backends",
+    -- "picom  --experimental-backends"
+    "picom  --experimental-backends",
+    "optimus-manager-qt"
   }
   for _, i in pairs(cmds) do
     awful.spawn(i)

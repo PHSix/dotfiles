@@ -1,42 +1,38 @@
 local wibox = require("wibox")
 local awful = require("awful")
 local beautiful = require("beautiful")
-local screen_geometry = awful.screen.focused().geometry
+local gears = require("gears")
+
 local dashboard =
-  wibox(
-  {
-    ontop = true,
-    visible = false,
-    type = "splash",
-    opacity = 0.8,
-  }
-)
-if screen_geometry.height < screen_geometry.width then
-  dashboard.width = screen_geometry.height * 4 / 5
-  dashboard.height = screen_geometry.height * 3 / 5
-  dashboard.x = (screen_geometry.width - dashboard.width) / 2
-  dashboard.y = (screen_geometry.height - dashboard.height) / 2
-else
-  dashboard.width = screen_geometry.width * 4 / 5
-  dashboard.height = screen_geometry.width * 3 / 5
-end
-dashboard:setup {
-  layout = wibox.layout.flex.horizontal,
-  {
-    widget = wibox.container.background,
-    bg = beautiful.purple,
-    forced_width = 200
+  awful.popup {
+  widget = {
+    {
+      {
+        text = "foobar",
+        widget = wibox.widget.textbox
+      },
+      {
+        widget = wibox.widget.imagebox,
+        image = gears.filesystem.get_configuration_dir() .. "/shuangpin.png"
+      },
+      {
+        value = 0.5,
+        forced_height = 30,
+        forced_width = 100,
+        widget = wibox.widget.progressbar
+      },
+      layout = wibox.layout.align.vertical
+    },
+    margins = 10,
+    widget = wibox.container.margin
   },
-  {
-    widget = wibox.container.background,
-    bg = beautiful.blue,
-    forced_width = 200
-  },
-  {
-    widget = wibox.container.background,
-    bg = beautiful.purple,
-    forced_width = 200
-  }
+  border_color = "#000000",
+  border_width = 2,
+  placement = awful.placement.centered,
+  ontop = true,
+  visible = false,
+  forced_height = 300,
+  forced_width = 300
 }
 
 return dashboard

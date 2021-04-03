@@ -50,11 +50,11 @@ return function(s)
           forced_height = 30,
           thickness = 7,
           color = beautiful.bg2,
-          widget = wibox.widget.separator
+          widget = wibox.widget.separator,
         },
         valign = "center",
         halign = "center",
-        widget = wibox.container.place
+        widget = wibox.container.place,
       },
       spacing = 3,
       layout = wibox.layout.fixed.horizontal

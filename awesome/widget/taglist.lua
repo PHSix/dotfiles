@@ -63,8 +63,6 @@ return function(s)
                 {
                   id = "text_role",
                   widget = wibox.widget.textbox
-                  -- image = "/home/ph/Downloads/vim(1).svg",
-                  -- widget = wibox.widget.imagebox
                 },
                 margins = 1,
                 widget = wibox.container.margin

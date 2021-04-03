@@ -2,6 +2,7 @@ local cmd = require("awful").spawn
 local conf = require("config")
 local awful = require("awful")
 local hotkeys_popup = awful.hotkeys_popup
+local volume = require("notify.volume")
 local func = {}
 function func.quit()
   cmd("killall v2ray")
@@ -15,6 +16,9 @@ function func.terminal()
 end
 function func.terminal_st()
   cmd("st")
+end
+function func.app()
+  cmd("rofi -show drun")
 end
 function func.launcher()
   if conf.launch == "rofi" then
@@ -80,10 +84,12 @@ end
 
 function func.volume_rasie()
   cmd("amixer set Master playback 5+")
+  volume.show_notify()
 end
 
 function func.volume_lower()
   cmd("amixer set Master playback 5-")
+  volume.show_notify()
 end
 
 function func.backlight_down()

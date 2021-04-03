@@ -4,6 +4,7 @@ local dpi = xresources.apply_dpi
 local gfs = require("gears.filesystem")
 
 local theme = {}
+theme.dpi = dpi
 
 theme.bg0 = "#213039"
 theme.bg1 = "#242B48"
@@ -74,7 +75,7 @@ theme.tasklist_font = "JetBrains Mono 16"
 
 theme.wallpaper = function()
   math.randomseed(os.time())
-  local num = math.random(1, 16)
+  local num = math.random(1, 3)
   return gfs.get_configuration_dir() .. "/wallpapers/" .. num .. ".jpg"
 end
 
