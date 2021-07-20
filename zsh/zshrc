@@ -2,16 +2,43 @@ proxy(){
   export http_proxy=http://127.0.0.1:8889
   export https_proxy=http://127.0.0.1:8889
 }
+  export http_proxy=http://127.0.0.1:8889
+  export https_proxy=http://127.0.0.1:8889
 
 
+# export counter_shutdown=1
+# 
+# shutdown(){
+#   # if [$counter_shutdown = '1']
+#   # then
+#   #   echo "想要关掉我？"
+#   # else
+#     echo "诶，不给关，就是玩"
+#   # fi
+# }
+# 
+# reboot(){
+#   echo "hhhhhhhhhhhhh"
+# }
+
+
+# rust
 export RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static
 export RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup
 
-export EDITOR=nvim
+# flutter
 export PUB_HOSTED_URL=https://pub.flutter-io.cn
 export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
 export ANDROID_HOME=~/Android/Sdk
-export GLFW_IM_MODULE=ibus
+export CHROME_EXECUTABLE=/usr/bin/google-chrome-stable
+
+# shell
+export FZF_DEFAULT_COMMAND="fd"
+export EDITOR=nvim
+# if [ $TERM = 'xterm-256color' ]
+# then
+#   neofetch
+# fi
 if [ $TERM = 'alacritty' ]
 then
   export TERM=xterm-256color
@@ -31,6 +58,7 @@ alias ls=exa
 alias l="exa -l"
 alias ll="exa -la"
 
+eval $(thefuck --alias)
 
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
@@ -57,7 +85,7 @@ zinit wait="1" lucid for \
 
   # OMZ::plugins/sudo/sudo.plugin.zsh \
 
-zinit snippet OMZ::lib/history.zsh
+  zinit snippet OMZ::lib/history.zsh
 
 # zinit wait='0' lucid for \
 #   OMZ::plugins/vi-mode/vi-mode.plugin.zsh
@@ -76,5 +104,5 @@ zinit light zsh-users/zsh-completions
 
 zinit ice lucid wait='1'
 zinit light Aloxaf/fzf-tab
-eval "$(starship init zsh)"
+# eval "$(starship init zsh)"
 

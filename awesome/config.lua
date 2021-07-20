@@ -5,7 +5,7 @@ local M = {
     awful.layout.suit.floating,
     awful.layout.suit.max,
   },
-  terminal = "kitty",
+  terminal = "GLFW_IM_MODULE=ibus;kitty",
   launch = "rofi",
   shift = "Shift",
   mod = "Mod4",

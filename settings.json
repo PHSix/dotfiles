@@ -5,7 +5,7 @@
   "workbench.settings.editor": "json",
   // editor
   "editor.tabSize": 2,
-  "editor.fontFamily": "Cascadia Code",
+  "editor.fontFamily": "FiraCode Nerd Font",
   "editor.fontSize": 16,
   "editor.fontLigatures": true,
   "editor.lineNumbers": "relative",
@@ -18,12 +18,13 @@
   "window.menuBarVisibility": "toggle",
   // theme
   "workbench.iconTheme": "material-icon-theme",
-  "workbench.colorTheme": "BeardedTheme Oceanic",
+  "workbench.colorTheme": "Oceanic Plus",
   // custom option
   "C_Cpp.updateChannel": "Insiders",
   "http.proxySupport": "off",
-  "liveServer.settings.CustomBrowser": "firefox",
+  "liveServer.settings.CustomBrowser": "chrome",
   "liveServer.settings.donotShowInfoMsg": true,
+  "liveServer.settings.donotVerifyTags": true,
   "breadcrumbs.enabled": false,
   "prettier.semi": true,
   "prettier.useEditorConfig": false,
@@ -39,7 +40,7 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "git.enableStatusBarSync": false,
-  "window.zoomLevel": 1,
+  "window.zoomLevel": 2,
   //
   // vscode vim
   //
@@ -54,6 +55,11 @@
   "vim.easymotionMarkerForegroundColorOneChar": "#7ed6df",
   "vim.easymotionMarkerForegroundColorTwoCharFirst": "#ffb400",
   "vim.easymotionMarkerForegroundColorTwoCharSecond": "#b98300",
+  // exit input method
+  "vim.autoSwitchInputMethod.enable": true,
+  "vim.autoSwitchInputMethod.defaultIM": "1",
+  "vim.autoSwitchInputMethod.obtainIMCmd": "/usr/bin/fcitx5-remote",
+  "vim.autoSwitchInputMethod.switchIMCmd": "/usr/bin/fcitx5-remote -t {im}",
   // search
   "vim.searchHighlightTextColor": "#D4BFFF",
   "vim.searchHighlightColor": "#218C74",
@@ -99,11 +105,13 @@
     { "before": ["<leader>", "l"], "after": ["<C-w>", "l"] },
     {
       "before": ["<C-n>"],
-      "commands": ["workbench.view.explorer"]
+      "commands": ["workbench.action.closeSidebar"]
     },
     { "before": ["K"], "commands": ["editor.action.showHover"] },
     { "before": ["[", "g"], "commands": ["editor.action.marker.prev"] },
     { "before": ["]", "g"], "commands": ["editor.action.marker.next"] },
+    { "before": ["g", "k"], "commands": ["editor.action.marker.prev"] },
+    { "before": ["g", "j"], "commands": ["editor.action.marker.next"] },
     { "before": ["F"], "commands": ["editor.action.formatDocument"] },
     {
       "before": ["<leader>", "c", "a"],
@@ -174,90 +182,45 @@
       "after": ["a", "f"]
     }
   ],
-  "sync.gist": "addfb246d8e445b0a6074b686cf29196c3c242dd",
-  "sync.forceUpload": false,
-  "sync.autoUpload": true,
+  // presitter
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "highlight.regexes": {
-    "((?:<!-- *)?(?:#|// @|//|./\\*+|<!--|--|\\* @|{!|{{!--|{{!) *TODO(?:\\s*\\([^)]+\\))?:?)((?!\\w)(?: *-->| *\\*/| *!}| *--}}| *}}|(?= *(?:[^:]//|/\\*+|<!--|@|--|{!|{{!--|{{!))|(?: +[^\\n@]*?)(?= *(?:[^:]//|/\\*+|<!--|@|--(?!>)|{!|{{!--|{{!))|(?: +[^@\\n]+)?))": {
-      "filterFileRegex": ".*(?<!CHANGELOG.md)$",
-      "decorations": [
-        {
-          "overviewRulerColor": "#ffcc00",
-          "backgroundColor": "#ffcc00",
-          "color": "#1f1f1f",
-          "fontWeight": "bold"
-        },
-        {
-          "backgroundColor": "#ffcc00",
-          "color": "#1f1f1f"
-        }
-      ]
-    },
-    "((?:<!-- *)?(?:#|// @|//|./\\*+|<!--|--|\\* @|{!|{{!--|{{!) *(?:FIXME|FIX|BUG|UGLY|DEBUG|HACK)(?:\\s*\\([^)]+\\))?:?)((?!\\w)(?: *-->| *\\*/| *!}| *--}}| *}}|(?= *(?:[^:]//|/\\*+|<!--|@|--|{!|{{!--|{{!))|(?: +[^\\n@]*?)(?= *(?:[^:]//|/\\*+|<!--|@|--(?!>)|{!|{{!--|{{!))|(?: +[^@\\n]+)?))": {
-      "filterFileRegex": ".*(?<!CHANGELOG.md)$",
-      "decorations": [
-        {
-          "overviewRulerColor": "#cc0000",
-          "backgroundColor": "#cc0000",
-          "color": "#1f1f1f",
-          "fontWeight": "bold"
-        },
-        {
-          "backgroundColor": "#cc0000",
-          "color": "#1f1f1f"
-        }
-      ]
-    },
-    "((?:<!-- *)?(?:#|// @|//|./\\*+|<!--|--|\\* @|{!|{{!--|{{!) *(?:REVIEW|OPTIMIZE|TSC)(?:\\s*\\([^)]+\\))?:?)((?!\\w)(?: *-->| *\\*/| *!}| *--}}| *}}|(?= *(?:[^:]//|/\\*+|<!--|@|--|{!|{{!--|{{!))|(?: +[^\\n@]*?)(?= *(?:[^:]//|/\\*+|<!--|@|--(?!>)|{!|{{!--|{{!))|(?: +[^@\\n]+)?))": {
-      "filterFileRegex": ".*(?<!CHANGELOG.md)$",
-      "decorations": [
-        {
-          "overviewRulerColor": "#00ccff",
-          "backgroundColor": "#00ccff",
-          "color": "#1f1f1f",
-          "fontWeight": "bold"
-        },
-        {
-          "backgroundColor": "#00ccff",
-          "color": "#1f1f1f"
-        }
-      ]
-    },
-    "((?:<!-- *)?(?:#|// @|//|./\\*+|<!--|--|\\* @|{!|{{!--|{{!) *(?:IDEA)(?:\\s*\\([^)]+\\))?:?)((?!\\w)(?: *-->| *\\*/| *!}| *--}}| *}}|(?= *(?:[^:]//|/\\*+|<!--|@|--|{!|{{!--|{{!))|(?: +[^\\n@]*?)(?= *(?:[^:]//|/\\*+|<!--|@|--(?!>)|{!|{{!--|{{!))|(?: +[^@\\n]+)?))": {
-      "filterFileRegex": ".*(?<!CHANGELOG.md)$",
-      "decorations": [
-        {
-          "overviewRulerColor": "#cc00cc",
-          "backgroundColor": "#cc00cc",
-          "color": "#1f1f1f",
-          "fontWeight": "bold"
-        },
-        {
-          "backgroundColor": "#cc00cc",
-          "color": "#1f1f1f"
-        }
-      ]
-    }
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "workbench.statusBar.visible": false,
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  // dart format
   "[dart]": {
     "editor.formatOnSave": true,
     "editor.formatOnType": true,
-    "editor.rulers": [
-      80
-    ],
+    "editor.rulers": [80],
     "editor.selectionHighlight": false,
     "editor.suggest.snippetsPreventQuickSuggestions": false,
     "editor.suggestSelection": "first",
     "editor.tabCompletion": "onlySnippets",
     "editor.wordBasedSuggestions": false
   },
+  // workbench
+  "workbench.statusBar.visible": true,
   "workbench.startupEditor": "newUntitledFile",
-  "[vue]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "workbench.editorAssociations": {
+    "*.ipynb": "jupyter.notebook.ipynb"
   },
-  "workbench.activityBar.visible": false
+  // terminal custom options
+  "terminal.integrated.fontFamily": "FiraCode Nerd Font",
+  // typescript toolchain
+  "typescript.updateImportsOnFileMove.enabled": "always"
 }
