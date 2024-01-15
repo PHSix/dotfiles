@@ -1,0 +1,42 @@
+set incsearch
+set ignorecase
+set smartcase
+set number
+set scrolloff=5
+set multiple-cursors
+set commentary
+set surround
+set NERDTree
+set showmode
+set keep-english-in-normal-and-restore-in-insert
+
+let mapleader = " "
+
+nnoremap ga :<C-u>action GotoAction<CR>
+nnoremap gb :<C-u>action JumpToLastChange<CR>
+nnoremap gc :<C-u>action GotoClass<CR>
+nnoremap gd :<C-u>action GotoDeclaration<CR>
+nnoremap gi :<C-u>action GotoImplementation<CR>
+nnoremap gf :<C-u>action GotoFile<CR>
+nnoremap gm :<C-u>action GotoSymbol<CR>
+nnoremap gu :<C-u>action ShowUsages<CR>
+nnoremap gt :<C-u>action GotoTest<CR>
+nnoremap gp :<C-u>action FindInPath<CR>
+nnoremap gr :<C-u>action RecentFiles<CR>
+nnoremap gh :<C-u>action Back<CR>
+nnoremap gl :<C-u>action Forward<CR>
+
+nnoremap <leader>fs :<C-u>action GotoSymbol<CR>
+nnoremap <leader>fw :<C-u>action FindInPath<CR>
+nnoremap <leader>fo :<C-u>action RecentFiles<CR>
+nnoremap <leader>j :<C-u>action GotoNextError<CR>
+nnoremap <leader>k :<C-u>action GotoPreviousError<CR>
+
+nnoremap <leader>rn :<C-u>action RenameElement<CR>
+nnoremap <leader>cf :<C-u>action ReformatCode<CR>
+nnoremap gcc :<C-u>action CommentByLineComment<CR>
+vnoremap gc :<C-u>action CommentByLineComment<CR>
+
+nnoremap <C-n> :<C-u>NERDTreeToggle<CR>
+
+nnoremap <leader>bd :q!<CR>

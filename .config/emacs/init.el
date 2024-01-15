@@ -1,0 +1,31 @@
+(add-to-list 'load-path (expand-file-name "lisp/" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "lisp/etc" user-emacs-directory))
+
+;; some code from `lib/etc'. that's code must no case mistake.
+(require 'etc-init)
+(when (file-exists-p (expand-file-name "custom-local" user-emacs-directory))
+    (add-to-list 'load-path (expand-file-name "custom-local" user-emacs-directory))
+    (+require 'custom-local)
+  )
+
+(+require 'init-presets)
+(+require 'init-straight)
+(+require 'init-evil)
+(+require 'init-org)
+(+require 'init-minibuffer)
+(+require 'init-theme)
+(+require 'init-tools)
+
+(when (not (eq system-type 'darwin))
+  (+require 'init-im)
+  )
+
+;; (+require 'init-treemacs)
+(+require 'init-neotree)
+;; (+require 'init-dirvish)
+(+require 'init-treesitter)
+(+require 'init-git)
+(+require 'init-langs)
+(+require 'init-shell)
+(+require 'init-lsp)
+(+require 'init-eaf)

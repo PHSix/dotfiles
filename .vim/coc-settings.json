@@ -1,0 +1,12 @@
+{
+	"coc.preferences.formatOnSave": true,
+	"suggest.enablePreselect": true,
+	"explorer.position": "right",
+	"explorer.keyMappings.global": {},
+	"explorer.sources": [
+		{
+			"name": "file",
+			"expand": true
+		}
+	]
+}
