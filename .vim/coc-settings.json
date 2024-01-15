@@ -8,5 +8,6 @@
 			"name": "file",
 			"expand": true
 		}
-	]
+	],
+	"explorer.icon.enableNerdfont": true
 }
