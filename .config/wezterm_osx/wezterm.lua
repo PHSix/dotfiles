@@ -14,7 +14,8 @@ return {
 	audible_bell = "Disabled",
 	enable_tab_bar = false,
 	-- color_scheme = "Nord (base16)",
-	color_scheme = "Edge Light (base16)",
+	-- color_scheme = "Edge Light (base16)",
+	color_scheme = "GitHub Dark",
 	window_padding = {
 		left = 0,
 		right = 0,
