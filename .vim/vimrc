@@ -20,6 +20,7 @@ set tabstop=4
 set softtabstop=4
 set history=1000
 set backspace=indent,eol,start
+set background=dark
 set wildmenu
 set showcmd
 
@@ -36,7 +37,7 @@ augroup help_map
 augroup END
 
 call plug#begin()
-Plug 'sainnhe/edge'
+Plug 'rakr/vim-one'
 
 Plug 'peitalin/vim-jsx-typescript'
 
@@ -58,8 +59,9 @@ if executable("node") == 1
 endif
 call plug#end()
 
-colorscheme edge
+colorscheme one
 
+map fy "+y
 nmap <leader>ff <Cmd>Leaderf file<CR>
 nmap <leader>fo <Cmd>Leaderf mru<CR>
 nmap <leader>fw <Cmd>Leaderf rg<CR>
