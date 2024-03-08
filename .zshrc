@@ -1,37 +1,17 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+########### aliases ############
+alias cl=clear
+
+### git commands
+alias gc="git clone"
+alias gs="git status"
+alias gp="git pull"
+alias gP="git push"
+if type "lazygit" > /dev/null; then
+	alias lg="lazygit"
 fi
 
-##################################
-############ alias ###############
-##################################
-alias cl=clear
-alias lg=lazygit
-alias gi=gitui
-alias nvi=nvim
 
-# git aliases
-alias ga="git add"
-alias gaa="git add --all"
-alias gba="git branch --all"
-alias gc="git commit --verbose"
-alias gca="git commit --verbose --amend"
-alias gcA="git commit --verbose --no-edit --amend"
-alias gcb="git checkout -b"
-alias grbc="git rebase --continue"
-alias grba="git rebase --abort"
-alias grbi="git rebase -i"
-alias gm="git merge"
-alias gP="git push"
-alias gPf="git push -f"
-alias gp="git pull"
-alias gpr="git pull --rebase"
-alias glogen="git log --oneline -n"
-alias fetch="fastfetch"
-
+### yazi auto change folder
 if type "yazi" > /dev/null; then
   alias ra="yz"
   function yz() {
@@ -44,52 +24,98 @@ if type "yazi" > /dev/null; then
   }
 fi
 
+### eza commands
 if type "eza" > /dev/null; then
-  # eza aliases
-  alias ls='eza $eza_params'
-  alias l='eza --git-ignore $eza_params'
-  alias ll='eza --all --header --long $eza_params'
-  alias llm='eza --all --header --long --sort=modified $eza_params'
-  alias la='eza -lbhHigUmuSa'
-  alias lx='eza -lbhHigUmuSa@'
-  alias lt='eza --tree $eza_params'
-  alias tree='eza --tree $eza_params'
+	alias ls='eza $eza_params'
+	alias l='eza --git-ignore $eza_params'
+	alias ll='eza --all --header --long $eza_params'
+	alias llm='eza --all --header --long --sort=modified $eza_params'
+	alias la='eza -lbhHigUmuSa'
+	alias lx='eza -lbhHigUmuSa@'
+	alias lt='eza --tree $eza_params'
+	alias tree='eza --tree $eza_params'
 fi
 
-##################################
 
+########### Env ###########
+if type "nvim" > /dev/null; then
+	export EDITOR=nvim
+else
+	export EDITOR=vim
+fi
 
+if type "yazi" > /dev/null; then
+	alias ra="yz"
+	function yz() {
+		tmp="$(mktemp -t "yazi-cwd.XXXXX")"
+		yazi --cwd-file="$tmp"
+		if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		cd -- "$cwd"
+		fi
+		rm -f -- "$tmp"
+	}
+fi
 export XDG_CONFIG_HOME="$HOME/.config"
-export EDITOR=nvim
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-[ -f ~/.zshrc_local.zsh ] && source ~/.zshrc_local.zsh
+### use homebrew tuna.tsinghua mirror if brew is existd.
+if type 'brew' > /dev/null; then
+	export HOMEBREW_INSTALL_FROM_API=1
+	export HOMEBREW_API_DOMAIN="https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api"
+	export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles"
+	export HOMEBREW_BREW_GIT_REMOTE="https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git"
+	export HOMEBREW_CORE_GIT_REMOTE="https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git"
+fi
 
-[ ! -d ~/.local/share/zap ] && {
-  echo "Installing zap package manager..."
-  git clone -b master  https://github.com/zap-zsh/zap.git ~/.local/share/zap
+######### plugins ###########
+export ZSH_PLUGIN_REPO_PREFIX=git@github.com:
+export PLUGIN_PATH=$HOME/.zsh-plugins
+# export ZSH_PLUGIN_REPO_PREFIX=https://github.com/
+plugin_install() {
+	tmp=$1
+	owner=$(echo "$tmp" | cut -d/ -f1)
+	repo=$(echo "$tmp" | cut -d/ -f2)
+	startup_file=$2
+
+	if [ ! -d $PLUGIN_PATH/$repo ]; then
+		git clone $ZSH_PLUGIN_REPO_PREFIX$owner/$repo.git $PLUGIN_PATH/$repo
+	fi
+	if [ -n "$startup_file" ]; then
+		source $PLUGIN_PATH/$repo/$startup_file
+	else
+		source $PLUGIN_PATH/$repo/$repo.plugin.zsh
+	fi
 }
 
-# Created by Zap installer
-[ -f "${XDG_DATA_HOME:-$HOME/.local/share}/zap/zap.zsh" ] && source "${XDG_DATA_HOME:-$HOME/.local/share}/zap/zap.zsh"
+# plugin_install "jeffreytse/zsh-vi-mode" "zsh-vi-mode.plugin.zsh"
+plugin_install "zdharma-continuum/fast-syntax-highlighting"
+plugin_install "marlonrichert/zsh-autocomplete"
+plugin_install "zsh-users/zsh-completions"
+plugin_install "zsh-users/zsh-autosuggestions"
 
-# Load and initialise completion system
-autoload -Uz compinit
-compinit
+######### vi mode #########
 
-# fzf-tab must loaded after compinit and before plugins
-plug "Aloxaf/fzf-tab"
+bindkey -v
+bindkey ^P up-history
+bindkey ^N down-history
+bindkey ^E vi-end-of-line
+bindkey ^A vi-beginning-of-line
+bindkey ^F vi-forward-char
+bindkey ^B vi-backward-char
 
-plug "zsh-users/zsh-autosuggestions"
-plug 'romkatv/powerlevel10k'
-plug "zap-zsh/zap-prompt"
-# plug "zsh-users/zsh-syntax-highlighting"
-plug "zdharma-continuum/fast-syntax-highlighting"
-plug "jeffreytse/zsh-vi-mode"
-plug "zsh-users/zsh-completions"
-
-if [ -v MACHINE_NAME ]; then
-  PROMPT=" [ %{$fg_bold[cyan]$MACHINE_NAME%{$reset_color ] $PROMPT"
+if type "starship" > /dev/null; then
+	eval "$(starship init zsh)"
 fi
 
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+if type "zoxide" > /dev/null; then
+	eval "$(zoxide init zsh)"
+fi
+
+if type "fnm" > /dev/null; then
+	eval "$(fnm env --use-on-cd)"
+fi
+
+if [ -d "$HOME/.bun/bin" ]; then
+	export PATH=$PATH:$HOME/.bun/bin
+fi
+
+autoload -Uz compinit

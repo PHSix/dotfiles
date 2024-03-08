@@ -18,5 +18,6 @@
     "border": true,
     "rounded": true
   },
-  "eslint.autoFixOnSave": true
+  "eslint.autoFixOnSave": true,
+  "snippets.ultisnips.pythonPrompt": false
 }

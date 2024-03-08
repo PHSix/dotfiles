@@ -6,6 +6,7 @@ from typing import Dict
 ALL_COMMON_FOLDERS = [
     ".config/wezterm",
     ".config/kitty",
+    ".config/starship.toml",
     ".config/alacritty",
     ".config/emacs",
     ".config/yazi",

@@ -3,7 +3,9 @@ local act = wezterm.action
 
 return {
 	font = wezterm.font_with_fallback({
-		"Macon", -- "Monaco"
+		"Macon",
+		-- "Monaco",
+		"FiraMono Nerd Font",
 		"Symbols Nerd Font Mono",
 		"Noto Color Emoji",
 		"霞鹜文楷",
@@ -42,3 +44,4 @@ return {
 		},
 	},
 }
+

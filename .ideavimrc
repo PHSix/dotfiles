@@ -40,3 +40,5 @@ vnoremap gc :<C-u>action CommentByLineComment<CR>
 nnoremap <C-n> :<C-u>NERDTreeToggle<CR>
 
 nnoremap <leader>bd :q!<CR>
+
+# vim: ft=vim

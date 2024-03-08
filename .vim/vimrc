@@ -56,6 +56,7 @@ Plug 'voldikss/vim-floaterm'
 
 if executable("node") == 1
 	Plug 'neoclide/coc.nvim', {'branch': 'release'}
+	Plug 'PHSix/coc-eslint-tools'
 endif
 call plug#end()
 
@@ -119,7 +120,7 @@ if &rtp =~ 'coc.nvim'
 	" coc-explorer settings
 	let g:coc_global_extensions = [
 				\'coc-json', 'coc-git', 'coc-vimlsp', 'coc-go', 
-				\'coc-tsserver', 'coc-eslint', 'coc-marketplace',
+				\'coc-tsserver', 'coc-marketplace',
 				\ 'coc-explorer', 'coc-snippets', 'coc-pairs'
 				\]
 
