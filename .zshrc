@@ -10,18 +10,19 @@ if type "lazygit" > /dev/null; then
 	alias lg="lazygit"
 fi
 
-
 ### yazi auto change folder
 if type "yazi" > /dev/null; then
-  alias ra="yz"
-  function yz() {
-    tmp="$(mktemp -t "yazi-cwd.XXXXX")"
-    yazi --cwd-file="$tmp"
-    if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-      cd -- "$cwd"
-    fi
-    rm -f -- "$tmp"
-  }
+	alias ra="yz"
+	function yz() {
+		tmp="$(mktemp -t "yazi-cwd.XXXXX")"
+		yazi --cwd-file="$tmp"
+
+		if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+			cd -- "$cwd"
+		fi
+
+		rm -f -- "$tmp"
+	}
 fi
 
 ### eza commands
@@ -66,41 +67,61 @@ if type 'brew' > /dev/null; then
 	export HOMEBREW_CORE_GIT_REMOTE="https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git"
 fi
 
-######### plugins ###########
-export ZSH_PLUGIN_REPO_PREFIX=git@github.com:
-export PLUGIN_PATH=$HOME/.zsh-plugins
-# export ZSH_PLUGIN_REPO_PREFIX=https://github.com/
-plugin_install() {
-	tmp=$1
-	owner=$(echo "$tmp" | cut -d/ -f1)
-	repo=$(echo "$tmp" | cut -d/ -f2)
-	startup_file=$2
+# Set the directory we want to store zinit and plugins
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 
-	if [ ! -d $PLUGIN_PATH/$repo ]; then
-		git clone $ZSH_PLUGIN_REPO_PREFIX$owner/$repo.git $PLUGIN_PATH/$repo
-	fi
-	if [ -n "$startup_file" ]; then
-		source $PLUGIN_PATH/$repo/$startup_file
-	else
-		source $PLUGIN_PATH/$repo/$repo.plugin.zsh
-	fi
-}
+# Download Zinit, if it's not there yet
+if [ ! -d "$ZINIT_HOME" ]; then
+   mkdir -p "$(dirname $ZINIT_HOME)"
+   git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+fi
+
+# Source/Load zinit
+source "${ZINIT_HOME}/zinit.zsh"
+
+# Add in zsh plugins
+zinit light zdharma-continuum/fast-syntax-highlighting
+zinit light zsh-users/zsh-completions
+zinit light zsh-users/zsh-autosuggestions
+# zinit light Aloxaf/fzf-tab
+
+zinit ice depth=1
+zinit light jeffreytse/zsh-vi-mode
 
 # plugin_install "jeffreytse/zsh-vi-mode" "zsh-vi-mode.plugin.zsh"
-plugin_install "zdharma-continuum/fast-syntax-highlighting"
-plugin_install "marlonrichert/zsh-autocomplete"
-plugin_install "zsh-users/zsh-completions"
-plugin_install "zsh-users/zsh-autosuggestions"
+# plugin_install "zdharma-continuum/fast-syntax-highlighting"
+# plugin_install "marlonrichert/zsh-autocomplete"
+# plugin_install "zsh-users/zsh-completions"
+# plugin_install "zsh-users/zsh-autosuggestions"
 
-######### vi mode #########
+if type 'fzf' > /dev/null; then
+	eval "$(fzf --zsh)"
+fi
 
-bindkey -v
-bindkey ^P up-history
-bindkey ^N down-history
-bindkey ^E vi-end-of-line
-bindkey ^A vi-beginning-of-line
-bindkey ^F vi-forward-char
-bindkey ^B vi-backward-char
+# Load completions
+autoload -Uz compinit && compinit
+
+zinit cdreplay -q
+
+# History
+HISTSIZE=5000
+HISTFILE=~/.zsh_history
+SAVEHIST=$HISTSIZE
+HISTDUP=erase
+setopt appendhistory
+setopt sharehistory
+setopt hist_ignore_space
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_ignore_dups
+setopt hist_find_no_dups
+
+# Completion styling
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' menu no
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 if type "starship" > /dev/null; then
 	eval "$(starship init zsh)"
@@ -116,6 +137,10 @@ fi
 
 if [ -d "$HOME/.bun/bin" ]; then
 	export PATH=$PATH:$HOME/.bun/bin
+fi
+
+if [ -d "$HOME/.npm-packages/bin" ]; then
+	export PATH=$PATH:$HOME/.npm-packages/bin
 fi
 
 autoload -Uz compinit
