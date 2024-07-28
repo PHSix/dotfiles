@@ -1,10 +1,7 @@
 import os
 import platform
-from typing import Dict
-
 
 ALL_COMMON_FOLDERS = [
-    ".config/wezterm",
     ".config/kitty",
     ".config/starship.toml",
     ".config/alacritty",
@@ -17,25 +14,22 @@ ALL_COMMON_FOLDERS = [
     ".ideavimrc",
 ]
 
+LINUX_FOLDERS = [
+    ".config/wezterm",
+    ".config/fontconfig"
+]
 
-OSX_FOLDERS_MAP: Dict[str, str] = {
-    ".config/wezterm": ".config/wezterm_osx",
-}
+OSX_FOLDERS = [
+    ".config/wezterm_osx:.config/wezterm"
+];
 
 
 def shell_call(cmd: str):
     print("execing cmd: {cmd}".format(cmd=cmd))
     try:
-        os.system(cmd)
+        _ = os.system(cmd)
     except:
         print("exec failed")
-
-
-def get_source_folder(f: str) -> str:
-    if platform.system() == "Darwin":
-        return OSX_FOLDERS_MAP.get(f) or f
-    return f
-
 
 def link_file(source: str, target: str):
     absPath = os.path.expanduser(target)
@@ -52,17 +46,30 @@ if __name__ == "__main__":
         print("please expect your `DOTFILES_PATH` environment variable.")
         exit(1)
 
-    path = os.path.abspath(dotfile_env)
+    cwd = os.path.abspath(dotfile_env)
 
     # prepare
     shell_call("mkdir ~/.config")
+    link_folders = ALL_COMMON_FOLDERS[:];
+    if platform.system() == 'Darwin':
+      link_folders.extend(OSX_FOLDERS)
+    elif platform.system() == 'Linux':
+      link_folders.extend(LINUX_FOLDERS)
 
-    for f in ALL_COMMON_FOLDERS:
-        link_file(
-            "{dotfiles_path}/{source_folder}".format(
-                dotfiles_path=path, source_folder=get_source_folder(f)
-            ),
-            "~/{folder}".format(folder=f),
-        )
+    for f in link_folders:
+      ps = f.split(':')
+      source = "{}/{}".format(cwd, f)
+      target = "~/{}".format(ps[0])
+      if len(ps) != 1:
+        target = "~/{}".format(ps[1])
+
+      link_file(source,target)
+
+      # link_file(
+      #     "{dotfiles_path}/{source_folder}".format(
+      #         dotfiles_path=cwd, source_folder=f
+      #     ),
+      #     "~/{folder}".format(folder=f),
+      # )
 
     print("setup finish")
