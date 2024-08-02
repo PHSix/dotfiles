@@ -80,27 +80,24 @@ fi
 source "${ZINIT_HOME}/zinit.zsh"
 
 # Add in zsh plugins
-zinit light zdharma-continuum/fast-syntax-highlighting
+# zinit light marlonrichert/zsh-autocomplete
+# zinit light zdharma-continuum/fast-syntax-highlighting
+zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
 # zinit light marlonrichert/zsh-autocomplete
-zinit light Aloxaf/fzf-tab
 
 zinit ice depth=1
 zinit light jeffreytse/zsh-vi-mode
 
-# plugin_install "jeffreytse/zsh-vi-mode" "zsh-vi-mode.plugin.zsh"
-# plugin_install "zdharma-continuum/fast-syntax-highlighting"
-# plugin_install "marlonrichert/zsh-autocomplete"
-# plugin_install "zsh-users/zsh-completions"
-# plugin_install "zsh-users/zsh-autosuggestions"
+# Load completions
+autoload -Uz compinit && compinit
+zinit light Aloxaf/fzf-tab
 
 if type 'fzf' > /dev/null; then
 	eval "$(fzf --zsh)"
 fi
 
-# Load completions
-autoload -Uz compinit && compinit
 
 zinit cdreplay -q
 
@@ -142,6 +139,11 @@ fi
 
 if [ -d "$HOME/.npm-packages/bin" ]; then
 	export PATH=$PATH:$HOME/.npm-packages/bin
+fi
+
+if [ -d "$HOME/.flutter/flutter" ]; then
+	export FLUTTER_HOME=$HOME/.flutter/flutter
+	export PATH=$PATH:$FLUTTER_HOME/bin
 fi
 
 autoload -Uz compinit
