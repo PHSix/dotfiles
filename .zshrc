@@ -67,39 +67,39 @@ if type 'brew' > /dev/null; then
 	export HOMEBREW_CORE_GIT_REMOTE="https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git"
 fi
 
+[[ -f ~/.config/zsh/p10k.zsh ]] && source ~/.config/zsh/p10k.zsh
+
 # Set the directory we want to store zinit and plugins
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 
 # Download Zinit, if it's not there yet
 if [ ! -d "$ZINIT_HOME" ]; then
-   mkdir -p "$(dirname $ZINIT_HOME)"
-   git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+	mkdir -p "$(dirname $ZINIT_HOME)"
+	git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 fi
 
 # Source/Load zinit
 source "${ZINIT_HOME}/zinit.zsh"
 
-# Add in zsh plugins
-# zinit light marlonrichert/zsh-autocomplete
-# zinit light zdharma-continuum/fast-syntax-highlighting
-zinit light zsh-users/zsh-syntax-highlighting
-zinit light zsh-users/zsh-completions
-zinit light zsh-users/zsh-autosuggestions
-# zinit light marlonrichert/zsh-autocomplete
+# Completion styling
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+zstyle ':completion:*' list-colors "$\{(s.:.)LS_COLORS}"
+zstyle ':completion:*' menu no
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
+
+# autoload -Uz compinit && compinit
 
 zinit ice depth=1
-zinit light jeffreytse/zsh-vi-mode
-
-# Load completions
-autoload -Uz compinit && compinit
-zinit light Aloxaf/fzf-tab
-
-if type 'fzf' > /dev/null; then
-	eval "$(fzf --zsh)"
-fi
-
-
-zinit cdreplay -q
+zinit for \
+	light-mode \
+	zsh-users/zsh-autosuggestions \
+	jeffreytse/zsh-vi-mode \
+	zdharma-continuum/fast-syntax-highlighting \
+	zdharma-continuum/history-search-multi-word \
+	zsh-users/zsh-completions \
+	Aloxaf/fzf-tab \
+	romkatv/powerlevel10k
 
 # History
 HISTSIZE=5000
