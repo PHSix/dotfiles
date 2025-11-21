@@ -12,6 +12,7 @@ ALL_COMMON_FOLDERS = [
     ".p10k.zsh",
     ".tmux.conf",
     ".ideavimrc",
+    ".npmrc",
 ]
 
 LINUX_FOLDERS = [

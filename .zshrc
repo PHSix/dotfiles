@@ -67,7 +67,7 @@ if type 'brew' > /dev/null; then
 	export HOMEBREW_CORE_GIT_REMOTE="https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git"
 fi
 
-[[ -f ~/.config/zsh/p10k.zsh ]] && source ~/.config/zsh/p10k.zsh
+[[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
 
 # Set the directory we want to store zinit and plugins
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
@@ -98,8 +98,14 @@ zinit for \
 	zdharma-continuum/fast-syntax-highlighting \
 	zdharma-continuum/history-search-multi-word \
 	zsh-users/zsh-completions \
-	Aloxaf/fzf-tab \
+	greymd/docker-zsh-completion \
 	romkatv/powerlevel10k
+
+if type "fzf" > /dev/null; then
+	zinit for light-mode Aloxaf/fzf-tab
+else
+	# zinit for light-mode zsh-users/zsh-completions
+fi
 
 # History
 HISTSIZE=5000
